@@ -24,6 +24,7 @@ signature HOARE =
 	              | Triple of boolExp * prog * boolExp
   end
 
+
 structure Hoare :> HOARE =
   struct
 	datatype numExp = Num  of int
