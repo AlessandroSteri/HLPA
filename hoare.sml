@@ -23,10 +23,9 @@ signature HOARE =
     datatype form = Prop   of boolExp
                   | Triple of boolExp * prog * boolExp
 
-    type repl
-    val replPre  : repl
-    val replPost : repl
-    val subst    : repl -> string -> numExp -> boolExp -> boolExp
+    val substNum    : numExp -> numExp -> boolExp -> boolExp
+    val substBool   : boolExp -> boolExp -> boolExp -> boolExp
+    val getMetaVals : form -> boolExp list
   end
 
 structure Hoare :> HOARE = 
@@ -54,28 +53,32 @@ structure Hoare :> HOARE =
     datatype form = Prop   of boolExp
                   | Triple of boolExp * prog * boolExp
 
-    type repl = string -> numExp -> numExp -> numExp
+    local
+      fun replace m1 m2 (e as Plus (m, n)) = if e = m1 then m2 else Plus (replace m1 m2 m, replace m1 m2 n)
+        | replace m1 m2 e                  = if e = m1 then m2 else e
+    in
+      fun substNum m1 m2 (Bool b)       = Bool b
+        | substNum m1 m2 (Not b)        = Not (substNum m1 m2 b)
+        | substNum m1 m2 (And (a, b))   = And (substNum m1 m2 a, substNum m1 m2 b)
+        | substNum m1 m2 (Or (a, b))    = Or (substNum m1 m2 a, substNum m1 m2 b)
+        | substNum m1 m2 (Impl (a, b))  = Impl (substNum m1 m2 a, substNum m1 m2 b)
+        | substNum m1 m2 (Minor (m, n)) = Minor (replace m1 m2 m, replace m1 m2 n)
+        | substNum m1 m2 (Equal (m, n)) = Equal (replace m1 m2 m, replace m1 m2 n)
+        | substNum m1 m2 _                = raise Match
+    end
 
-    fun replPre x e (Num n)      = Num n
-      | replPre x e (Var y)      = if x = y then e else Var y
-      | replPre x e (Plus (m,n)) = Plus (replPre x e m, replPre x e n)
+    fun substBool b1 b2 (e as Not b)       = if e = b1 then b2 else Not (substBool b1 b2 b)
+      | substBool b1 b2 (e as And (a, b))  = if e = b1 then b2 else And (substBool b1 b2 a, substBool b1 b2 b)
+      | substBool b1 b2 (e as Or (a, b))   = if e = b1 then b2 else Or (substBool b1 b2 a, substBool b1 b2 b)
+      | substBool b1 b2 (e as Impl (a, b)) = if e = b1 then b2 else Impl (substBool b1 b2 a, substBool b1 b2 b)
+      | substBool b1 b2 e                  = if e = b1 then b2 else e
 
-    fun replPost x e (Num n)      = Num n
-      | replPost x e (Var y)      = if Var y = e then Var x else Var y
-      | replPost x e (Plus (m,n)) = if Plus (m, n) = e then
-                                      Var x
-                                    else
-                                      let val m' = if m = e then Var x else replPost x e m
-                                          val n' = if n = e then Var x else replPost x e n
-                                      in  Plus (m', n')
-                                      end
-
-    fun subst f x e (Bool b)        = Bool b
-      | subst f x e (Not b)         = Not (subst f x e b)
-      | subst f x e (And (a, b))    = And (subst f x e a, subst f x e b)
-      | subst f x e (Or  (a, b))    = Or (subst f x e a, subst f x e b)
-      | subst f x e (Impl (a, b))   = Impl (subst f x e a, subst f x e b)
-      | subst f x e (Minor (m, n))  = Minor (f x e m, f x e m)
-      | subst f x e (Equal (m, n))  = Equal (f x e m, f x e m)
-      | subst f x e _               = raise Match
+    local
+      fun aux (And (a, b))          = (aux a) @ (aux b)
+        | aux (mv as MetaVal (_,_)) = [mv]
+        | aux _                     = []
+    in
+      fun getMetaVals (Prop b)                = aux b
+        | getMetaVals (Triple (pre, p, post)) = (aux pre) @ (aux post)
+    end
   end
