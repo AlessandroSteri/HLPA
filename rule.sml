@@ -63,27 +63,27 @@ structure Rule :> RULE =
     fun isFinal (State (forms, _)) = null forms
 
     fun getForms (State (forms, _)) = forms
+    
+    fun tacNorm i (State (forms, n)) =
+      let val mvs =  H.getMetaVals (List.nth (forms, i - 1))
+          val H.MetaVal(a,v) = hd mvs 
+          fun substForms meta []                                 = []
+            | substForms meta (H.Prop b :: forms)                = H.Prop (H.substBool meta v b) :: substForms meta forms
+            | substForms meta (H.Triple (pre, p, post) :: forms) = let val pre'  = H.substBool meta v pre
+                                                                    val post' = H.substBool meta v post
+                                                                    in  H.Triple (pre', p, post') :: substForms meta forms
+                                                                    end
+          fun substMetaVals ((mv as H.MetaVal(a',_)) :: mvs) forms = substMetaVals mvs (if a = a' then substForms mv forms else forms)
+            | substMetaVals _ forms                                = forms
 
-    local
-      fun substForms b1 b2 []                                 = []
-        | substForms b1 b2 (H.Prop b :: forms)                = H.Prop (H.substBool b1 b2 b) :: substForms b1 b2 forms
-        | substForms b1 b2 (H.Triple (pre, p, post) :: forms) = let val pre'  = H.substBool b1 b2 pre
-                                                                    val post' = H.substBool b1 b2 post
-                                                                in  H.Triple (pre', p, post') :: substForms b1 b2 forms
-                                                                end
-    in
-      fun tacNorm i (State (forms, n)) =
-        let val mv as H.MetaVal (a, b) = hd (H.getMetaVals (List.nth (forms, i - 1)))
-        (* in  State (substForms mv b (substForms (H.Meta a, b, forms)), n) *)
-        in  State (substForms mv b (substForms (H.Meta a) b forms), n)
-        end
-        handle Subscript => raise InvalFormIndex
-    end
+      in  State (substMetaVals mvs (substForms (H.Meta a) forms), n)
+      end
+      handle Subscript => raise InvalFormIndex
 
     val tacAxiom =
       tacBase (fn H.Prop (H.Impl (b1, b2))              => []
                 | H.Triple (pre, H.Skip, post)          => if pre = post then [] else raise TacFailed
-                | H.Triple (pre, H.Assign (x, m), post) => if pre = H.substNum (H.Var x) m pre then [] else raise TacFailed
+                | H.Triple (pre, H.Assign (x, m), post) => if pre = H.substNum (H.Var x) m post then [] else raise TacFailed
                 | _                                     => raise Match)
 
     val tacSkip =

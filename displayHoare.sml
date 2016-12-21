@@ -1,4 +1,4 @@
-signature DISPLAY_HOARE = 
+    signature DISPLAY_HOARE = 
   sig 
     val displayForm : int -> Hoare.form -> unit
   end

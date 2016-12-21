@@ -25,9 +25,8 @@ structure Controller :> CONTROLLER =
       (*val goal = setState o Rule.init o ParseFol.read*)
     fun by tac = setState(tac (!currState))
                (*Devono essere gestite tutte le eccezioni*)
-    	           handle _ => print "** Tactic FAILED! **"
+    	           handle _ => print "** Tactic FAILED! **\n"
 
     fun goal form = setState (Rule.init form) 
     fun getState() = !currState
   end
-

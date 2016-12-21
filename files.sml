@@ -1,2 +1,8 @@
-use "/home/chiara/Documents/uni/linguaggi-di-programmazione/progetto/sviluppo/mio/02/hoare.sml";
-use "/home/chiara/Documents/uni/linguaggi-di-programmazione/progetto/sviluppo/mio/02/rule.sml"
+use "/Users/alessandrosteri/Documents/Università/LinguaggiDiProgrammazione/HLPA/hoare.sml";
+use "/Users/alessandrosteri/Documents/Università/LinguaggiDiProgrammazione/HLPA/rule.sml";
+use "/Users/alessandrosteri/Documents/Università/LinguaggiDiProgrammazione/HLPA/displayHoare.sml";
+use "/Users/alessandrosteri/Documents/Università/LinguaggiDiProgrammazione/HLPA/controller.sml";
+
+(* use "/Users/alessandrosteri/Documents/Università/LinguaggiDiProgrammazione/HLPA/files.sml";
+ *)
+
