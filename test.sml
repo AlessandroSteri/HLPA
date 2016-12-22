@@ -13,9 +13,8 @@ open Controller;
 goal form;
 by (Rule.tacComp 1);
 by (Rule.tacIf 2);
-(* by (Rule.tacAssign 3); *)
 by (Rule.tacStr 3);
-by (Rule.tacStr 3);
+by (Rule.tacAssign 4);
 
 by ( Rule.tacNorm 4);
 
@@ -31,7 +30,7 @@ by (Rule.tacStr 1);
 
 by (Rule.tacAssign 2);
 
-by (Rule.tacAssign 2);
+by (Rule.tacNorm 2);
 
 by (Rule.tacAxiom 1);
 
