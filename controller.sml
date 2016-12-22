@@ -16,7 +16,7 @@ structure Controller :> CONTROLLER =
 
     fun pr st =
         let val fs = Rule.getForms st
-        in if Rule.isFinal st then print "No subgoals left!\n"
+        in if Rule.isFinal st then print "No subgoals left!Milner says: <<Good job bro!>>\n"
            else printGoals(1,fs)
         end
 

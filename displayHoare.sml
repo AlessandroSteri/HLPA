@@ -20,8 +20,8 @@ structure DisplayHoare :> DISPLAY_HOARE =
       | printBool (H.Impl(a, b))      = "(" ^ printBool a ^ " -> " ^ printBool b ^ ")"
       | printBool (H.Minor(m, n))     = printNum m ^ " < " ^ printNum n
       | printBool (H.Equal(m, n))     = printNum m ^ " = " ^ printNum n
-      | printBool (H.Meta a)          = "?" ^ a
-      | printBool (H.MetaVal(a,b))    = "?" ^ a ^ " : " ^ printBool b
+      | printBool (H.Meta a)          = a
+      | printBool (H.MetaVal(a,b))    = a ^ " : " ^ printBool b
 
     fun printProg H.Skip           = "skip"
       | printProg (H.Comp(p1,p2))  = printProg p1 ^ "; " ^ printProg p2
