@@ -1,4 +1,8 @@
 Group is
+controller.sml
 hoare.sml
+lexer.sml
+parser.sml
+printer.sml
 rule.sml
 $/basis.cm $/smlnj-lib.cm

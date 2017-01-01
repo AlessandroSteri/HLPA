@@ -64,21 +64,28 @@ structure Hoare :> HOARE =
         | substNum m1 m2 (Impl (a, b))  = Impl (substNum m1 m2 a, substNum m1 m2 b)
         | substNum m1 m2 (Minor (m, n)) = Minor (replace m1 m2 m, replace m1 m2 n)
         | substNum m1 m2 (Equal (m, n)) = Equal (replace m1 m2 m, replace m1 m2 n)
-        | substNum m1 m2 _                = raise Match
+        | substNum m1 m2 _              = raise Match
     end
 
-    fun substBool b1 b2 (e as Not b)       = if e = b1 then b2 else Not (substBool b1 b2 b)
-      | substBool b1 b2 (e as And (a, b))  = if e = b1 then b2 else And (substBool b1 b2 a, substBool b1 b2 b)
-      | substBool b1 b2 (e as Or (a, b))   = if e = b1 then b2 else Or (substBool b1 b2 a, substBool b1 b2 b)
-      | substBool b1 b2 (e as Impl (a, b)) = if e = b1 then b2 else Impl (substBool b1 b2 a, substBool b1 b2 b)
-      | substBool b1 b2 e                  = if e = b1 then b2 else e
+    local
+      fun metaEqual a (Meta a')         = a = a'
+        | metaEqual a (MetaVal (a', _)) = a = a'
+        | metaEqual a _                 = false
+    in
+      fun substBool b1 b2 (e as Not b)          = if e = b1 then b2 else Not (substBool b1 b2 b)
+        | substBool b1 b2 (e as And (a, b))     = if e = b1 then b2 else And (substBool b1 b2 a, substBool b1 b2 b)
+        | substBool b1 b2 (e as Or (a, b))      = if e = b1 then b2 else Or (substBool b1 b2 a, substBool b1 b2 b)
+        | substBool b1 b2 (e as Impl (a, b))    = if e = b1 then b2 else Impl (substBool b1 b2 a, substBool b1 b2 b)
+        | substBool b1 b2 (e as MetaVal (a, _)) = if metaEqual a b1 then b2 else e
+        | substBool b1 b2 e                     = if e = b1 then b2 else e
+    end
 
     local
-      fun aux (And (a, b))          = (aux a) @ (aux b)
-        | aux (mv as MetaVal (_,_)) = [mv]
-        | aux _                     = []
+      fun helper (And (a, b))          = (helper a) @ (helper b)
+        | helper (mv as MetaVal (_,_)) = [mv]
+        | helper _                     = []
     in
-      fun getMetaVals (Prop b)                = aux b
-        | getMetaVals (Triple (pre, p, post)) = (aux pre) @ (aux post)
+      fun getMetaVals (Prop b)                = helper b
+        | getMetaVals (Triple (pre, p, post)) = (helper pre) @ (helper post)
     end
   end

@@ -37,12 +37,6 @@ structure Rule :> RULE =
       if n < 26 then "_" ^ letter n
       else gensym (n div 26) ^ letter (n mod 26)
 
-    fun invar g post =
-      let val ng = H.Not g
-          val H.And (b1, b2) = post
-      in  if (ng = b2) then b1 else raise InvarError
-      end
-
     fun spliceForms forms newForms i =
       List.take (forms, i - 1) @ newForms @ List.drop (forms, i)
 
@@ -58,25 +52,28 @@ structure Rule :> RULE =
       end
       handle Subscript => raise InvalFormIndex
 
+    fun invar g post =
+      let val ng = H.Not g
+          val H.And (b1, b2) = post
+      in  if (ng = b2) then b1 else raise InvarError
+      end
+
+    fun substMeta meta v []                                 = []
+      | substMeta meta v (H.Prop b :: forms)                = H.Prop (H.substBool meta v b) :: substMeta meta v forms
+      | substMeta meta v (H.Triple (pre, p, post) :: forms) = let val pre' = H.substBool meta v pre
+                                                                  val post' = H.substBool meta v post
+                                                              in  H.Triple (pre', p, post') :: substMeta meta v forms
+                                                              end
+
     fun init form = State ([form], 0)
 
     fun isFinal (State (forms, _)) = null forms
 
     fun getForms (State (forms, _)) = forms
-    
-    fun tacNorm i (State (forms, n)) =
-      let val mvs =  H.getMetaVals (List.nth (forms, i - 1))
-          val H.MetaVal(a,v) = hd mvs 
-          fun substForms meta []                                 = []
-            | substForms meta (H.Prop b :: forms)                = H.Prop (H.substBool meta v b) :: substForms meta forms
-            | substForms meta (H.Triple (pre, p, post) :: forms) = let val pre'  = H.substBool meta v pre
-                                                                    val post' = H.substBool meta v post
-                                                                    in  H.Triple (pre', p, post') :: substForms meta forms
-                                                                    end
-          fun substMetaVals ((mv as H.MetaVal(a',_)) :: mvs) forms = substMetaVals mvs (if a = a' then substForms mv forms else forms)
-            | substMetaVals _ forms                                = forms
 
-      in  State (substMetaVals mvs (substForms (H.Meta a) forms), n)
+    fun tacNorm i (State (forms, n)) =
+      let val mv as H.MetaVal (a,v) = hd (H.getMetaVals (List.nth (forms, i - 1)))
+      in  State (substMeta mv v (substMeta (H.Meta a) v forms), n)
       end
       handle Subscript => raise InvalFormIndex
 
@@ -95,7 +92,7 @@ structure Rule :> RULE =
       tacBase (fn H.Triple (H.Meta a, H.Assign (x, m), post) => let val v = H.substNum (H.Var x) m post
                                                                 in  [H.Triple (H.MetaVal (a, v), H.Assign (x, m), post)]
                                                                 end
-                | H.Triple (pre, H.Assign (x, m), H.Meta a)  => let val v = H.substNum (H.Var x) m pre
+                | H.Triple (pre, H.Assign (x, m), H.Meta a)  => let val v = H.substNum m (H.Var x) pre
                                                                 in  [H.Triple (pre, H.Assign (x, m), H.MetaVal (a, v))]
                                                                 end
                 | _                                          => raise Match)

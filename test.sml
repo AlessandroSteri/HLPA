@@ -38,7 +38,19 @@ by (Rule.tacAxiom 1);
 
 by (Rule.tacAxiom 1);
 
+val progToScanByLex = "x = 3 && y = 2 || y = 1 While skip"
+
+val progToScanByLex2 = "{x = 3 && y = 2 || y = 1 } while true do skip {true}"
+
+val progToScanByLex3 = "{x=1} while true do x:= x+1 {true}"
+
+
+  
+
+
 (*
+
+{x = 0} skip ; if (x < 0) then x := x + 1 else x := x + 2 {x = 2}
 val p1 = Hoare.Assign("b", Hoare.Var "x")
 val p2 = Hoare.Assign("a", Hoare.Var "0")
 val gW = Hoare.Not(Hoare.Minor ("b", Hoare.Var "y"))
