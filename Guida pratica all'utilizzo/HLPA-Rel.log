@@ -1,0 +1,300 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.1.2)  19 AUG 2017 16:46
+entering extended mode
+ restricted \write18 enabled.
+ file:line:error style messages enabled.
+ %&-line parsing enabled.
+**HLPA-Rel.tex
+(./HLPA-Rel.tex
+LaTeX2e <2016/03/31>
+Babel <3.9r> and hyphenation patterns for 83 language(s) loaded.
+(/usr/local/texlive/2016/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2014/09/29 v1.4h Standard LaTeX document class
+(/usr/local/texlive/2016/texmf-dist/tex/latex/base/size10.clo
+File: size10.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@section=\count80
+\c@subsection=\count81
+\c@subsubsection=\count82
+\c@paragraph=\count83
+\c@subparagraph=\count84
+\c@figure=\count85
+\c@table=\count86
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+) (/usr/local/texlive/2016/texmf-dist/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2016/03/10 v2.15b AMS math features
+\@mathmargin=\skip43
+
+For additional information on amsmath, use the `?' option.
+(/usr/local/texlive/2016/texmf-dist/tex/latex/amsmath/amstext.sty
+Package: amstext 2000/06/29 v2.01 AMS text
+ (/usr/local/texlive/2016/texmf-dist/tex/latex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks14
+\ex@=\dimen103
+)) (/usr/local/texlive/2016/texmf-dist/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+\pmbraise@=\dimen104
+) (/usr/local/texlive/2016/texmf-dist/tex/latex/amsmath/amsopn.sty
+Package: amsopn 2016/03/08 v2.02 operator names
+)
+\inf@bad=\count87
+LaTeX Info: Redefining \frac on input line 199.
+\uproot@=\count88
+\leftroot@=\count89
+LaTeX Info: Redefining \overline on input line 297.
+\classnum@=\count90
+\DOTSCASE@=\count91
+LaTeX Info: Redefining \ldots on input line 394.
+LaTeX Info: Redefining \dots on input line 397.
+LaTeX Info: Redefining \cdots on input line 518.
+\Mathstrutbox@=\box26
+\strutbox@=\box27
+\big@size=\dimen105
+LaTeX Font Info:    Redeclaring font encoding OML on input line 634.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 635.
+\macc@depth=\count92
+\c@MaxMatrixCols=\count93
+\dotsspace@=\muskip10
+\c@parentequation=\count94
+\dspbrk@lvl=\count95
+\tag@help=\toks15
+\row@=\count96
+\column@=\count97
+\maxfields@=\count98
+\andhelp@=\toks16
+\eqnshift@=\dimen106
+\alignsep@=\dimen107
+\tagshift@=\dimen108
+\tagwidth@=\dimen109
+\totwidth@=\dimen110
+\lineht@=\dimen111
+\@envbody=\toks17
+\multlinegap=\skip44
+\multlinetaggap=\skip45
+\mathdisplay@stack=\toks18
+LaTeX Info: Redefining \[ on input line 2739.
+LaTeX Info: Redefining \] on input line 2740.
+) (/usr/local/texlive/2016/texmf-dist/tex/latex/verbatimbox/verbatimbox.sty
+Package: verbatimbox 2014/03/12 v3.13 Routines for placing verbatim text into boxes, useful in places where the verbatim environment is inaccessible. Secondarily, for adding vertical buffer around an object.
+ (/usr/local/texlive/2016/texmf-dist/tex/latex/tools/verbatim.sty
+Package: verbatim 2014/10/28 v1.5q LaTeX2e package for verbatim enhancements
+\every@verbatim=\toks19
+\verbatim@line=\toks20
+\verbatim@in@stream=\read1
+) (/usr/local/texlive/2016/texmf-dist/tex/latex/readarray/readarray.sty
+Package: readarray 2013/05/09 v1.2 Routines for inputting array data and recalling it on an element-by-element basis. Currently supports 2-D and 3-D array
+ (/usr/local/texlive/2016/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
+) (/usr/local/texlive/2016/texmf-dist/tex/latex/ifnextok/ifnextok.sty
+Package: ifnextok 2011/06/27 v0.3 test next token (UL)
+)
+\c@@index=\count99
+\c@@plane=\count100
+\c@@row=\count101
+\c@@col=\count102
+\c@use@args=\count103
+\c@@record=\count104
+\c@arg@index=\count105
+\c@break@count=\count106
+)
+\savedverbbox=\box28
+\c@VerbboxLineNo=\count107
+\boxtopsep=\dimen112
+\boxbottomsep=\dimen113
+\ps@tempdima=\dimen114
+\ps@tempboxa=\box29
+\boxtop@sep=\skip46
+\boxbottom@sep=\skip47
+) (/usr/local/texlive/2016/texmf-dist/tex/latex/fancyvrb/fancyvrb.sty
+Package: fancyvrb 2008/02/07
+ Style option: `fancyvrb' v2.7a, with DG/SPQR fixes, and firstline=lastline fix <2008/02/07> (tvz) (/usr/local/texlive/2016/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks21
+)
+\FV@CodeLineNo=\count108
+\FV@InFile=\read2
+\FV@TabBox=\box30
+\c@FancyVerbLine=\count109
+\FV@StepNumber=\count110
+\FV@OutFile=\write3
+) (./HLPA-Rel.aux)
+\openout1 = `HLPA-Rel.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+
+Overfull \hbox (22.93939pt too wide) in paragraph at lines 10--10
+ [][] 
+ []
+
+
+Overfull \hbox (4.38953pt too wide) in paragraph at lines 27--29
+\OT1/cmr/m/n/10 dove non sono in grado di cal-co-lare la pre-con-dizione o la post-con-dizione all'interno
+ []
+
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 33.
+(/usr/local/texlive/2016/texmf-dist/tex/latex/base/omscmr.fd
+File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 33.
+ [1
+
+{/usr/local/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2]
+\c@enumTemp=\count111
+ [3]
+Overfull \hbox (6.74693pt too wide) in paragraph at lines 132--136
+ [] 
+ []
+
+
+Overfull \hbox (6.74693pt too wide) in paragraph at lines 139--144
+ [] 
+ []
+
+[4]
+Underfull \hbox (badness 10000) in paragraph at lines 146--288
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 146--288
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 146--288
+
+ []
+
+
+Overfull \hbox (17.24684pt too wide) in paragraph at lines 146--288
+[] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 146--288
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 146--288
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 146--288
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 146--288
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 146--288
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 146--288
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 146--288
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 146--288
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 146--288
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 146--288
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 146--288
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 146--288
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 146--288
+
+ []
+
+
+Overfull \hbox (57.44223pt too wide) in paragraph at lines 146--288
+\OT1/cmr/m/n/10 A par-tire dall'ultimo stato, ap-pli-cando in se-quenza \OT1/cmtt/m/n/10 by(Rule.tacStr 2)\OT1/cmr/m/n/10 , \OT1/cmtt/m/n/10 by(Rule.tacAssign
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 146--288
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 146--288
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 146--288
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 146--288
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 146--288
+
+ []
+
+[5] [6] [7] (./HLPA-Rel.aux) ) 
+Here is how much of TeX's memory you used:
+ 1512 strings out of 493014
+ 19487 string characters out of 6133352
+ 82200 words of memory out of 5000000
+ 5077 multiletter control sequences out of 15000+600000
+ 10182 words of font info for 37 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 30i,6n,21p,555b,187s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2016/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmti9.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on HLPA-Rel.pdf (7 pages, 174950 bytes).
+PDF statistics:
+ 84 PDF objects out of 1000 (max. 8388607)
+ 60 compressed objects within 1 object stream
+ 0 named destinations out of 1000 (max. 500000)
+ 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+
