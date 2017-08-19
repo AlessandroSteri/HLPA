@@ -65,7 +65,8 @@ There are two types of tactic:
 
 The tacAxiom tactic verify that the target formula is an axiom and in such a case it remove the formula from the current state.
 
-#Le due tattiche tacSkip e tacAxiom, pur corrispondendo a degli assiomi sono diverse da tacAxiom poich e sono utilizzate per calcolare le precondizioni o le post condizioni quando al loro posto sono presenti meta-variabili sui programmi Skip e negli assegnamenti. 
+tacSkip and tacAssign are axioms but they differ from tacAxiom since they are used to compute preconditions or postconditions when a meta-variable is used as a placeholder instead of the corresponding expression.
+
 All the other tactic are simply an implementation of the matching rule of inference.
 
 There are other two special tactic:
