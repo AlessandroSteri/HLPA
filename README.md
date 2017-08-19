@@ -57,10 +57,25 @@ The cinstructor *Meta* defines a meta-variable *_a* as a placesholder for a bool
 When you apply a tactic to a formula that contains a meta-variable *_a* in such a state that is possible to compute the boolean exp that *_a* is holdimg the place for, you can define by the constructor *MetaVal* a meta-value that is a parir *(a, exp)* that associates  the computed boolean expression exp to the meta-variable *_a* and is written in HLPA as *a : exp*.
 
 ## Tactics
-TODO
-# Instructions
+There are two types of tactic:
+* base tactic: does not introduce meta-variable
+  *  tacAxiom, tacSkip, tacAssign, tacWhile, tacIf.
+* meta tactic: does introduce meta-variable
+  * tacStr, tacWeak, tacComp
 
-Vedere Guida pratica all'utilizzo
+The tacAxiom tactic verify that the target formula is an axiom and in such a case it remove the formula from the current state.
+
+#Le due tattiche tacSkip e tacAxiom, pur corrispondendo a degli assiomi sono diverse da tacAxiom poich e sono utilizzate per calcolare le precondizioni o le post condizioni quando al loro posto sono presenti meta-variabili sui programmi Skip e negli assegnamenti. 
+All the other tactic are simply an implementation of the matching rule of inference.
+
+There are other two special tactic:
+* tacNorm
+* tacMeta
+
+tacNorm applied to a formula that contains a meta-value of the form * a : exp* substitute con *exp* all the occurrency of meta-variable and  meta-value named *_a* in the current state.
+This process is called normalization.
+
+tacMeta takes as arguments a string *_a* and a boolean expression *exp* and substitute with exp all the meta-variable and meta-value named *_a* in the current state allowing the user to provide manually the value associated to a meta-variable.
 
 ## Practical Guide
 In this section we describe the exposed interface of **Controller** that let's you drive the proof, followed by a pratical example of proof.
@@ -72,22 +87,22 @@ In this section we describe the exposed interface of **Controller** that let's y
 * getState: returns the current state.
 
 As example of usage we will show how to derive the folloving Hoare's triple *F*:
-```bash
+```
 {x=1} skip; if(x<0) then x := x+1 else x := x+2 end {x=2}
 ```
 Open the terminal in the project folder and start ML REPL:
-```bash
+```
 Standard ML of New Jersey v110.78 [built: Thu Jul 23 11:21:58 2015]
 -
 ```
 Open HLPA files:
-```bash
+```
 Standard ML of New Jersey v110.78 [built: Thu Jul 23 11:21:58 2015]
 -  use "files.sml";
 ...
 ```
 Open structure Controller to pbtain the interface:
-```bash
+```
 - open Controller;
 opening Controller
   val pr : unit -> unit
@@ -99,17 +114,103 @@ opening Controller
 -
 ```
 Then insert the formula *F* using goal (at each step of the proof HLPA will print the current state of the proof enumering each formula in it, at this moment just the initian one):
-```bash
+```
 - goal "{x=0}skip;if(x<0)then x:=x+1 else x:=x+2 end{x=2}";
 1. {x = 0}skip; if (x < 0) then x := x + 1 else x := x + 2 end{x = 2}
 val it = () : unit
 -
 ```
 Let's apply the tactic *tacComp* on the only formula we have, in order to do so we use the function *by*, and since tacComp is a meta rule it add the meta-variable *_a*:
-```bash
+```
 - by(Rule.tacComp 1);
 1. {x = 0}skip{_a}
 2. {_a}if (x < 0) then x := x + 1 else x := x + 2 end{x = 2}
+val it = () : unit
+-
+```
+Since now in the current state there are two premises you can choose wich to target by a tactic, let's choose to apply tacIf on formula **2.** :
+```
+- by(Rule.tacIf 2);
+1. {x = 0}skip{_a}
+2. {_a & x < 0}x := x + 1{x = 2}
+3. {_a & x >= 0}x := x + 2{x = 2}
+val it = () : unit
+-
+```
+Let's apply then tacStr on formula **3.** and on the resulting state tacAssign on formula **4.**:
+```
+- by(Rule.tacStr 3);
+1. {x = 0}skip{_a}
+2. {_a & x < 0}x := x + 1{x = 2}
+3. _a & x >= 0 -> _b
+4. {_b}x := x + 2{x = 2}
+val it = () : unit
+- by(Rule.tacAssign 4);
+1. {x = 0}skip{_a}
+2. {_a & x < 0}x := x + 1{x = 2}
+3. _a & x >= 0 -> _b
+4. {_b : x + 2 = 2}x := x + 2{x = 2}
+val it = () : unit
+-
+```
+* (Note that meta-variabile *_b* become meta-value *b : x + 2 = 2* when it's computed by the tactic tacAssign)
+
+Let's then normilize the meta-variable *_b* using tacNorm; this means that all the occurrency of *_b* will become the expression x + 2 = 2:
+
+```
+- by(Rule.tacNorm 4);
+1. {x = 0}skip{_a}
+2. {_a & x < 0}x := x + 1{x = 2}
+3. _a & x >= 0 -> x + 2 = 2
+4. {x + 2 = 2}x := x + 2{x = 2}
+val it = () : unit
+-
+```
+Since formula **4.** is an axiom can be remooved with tacAxiom:
+
+```
+- by(Rule.tacAxiom 4);
+1. {x = 0}skip{_a}
+2. {_a & x < 0}x := x + 1{x = 2}
+3. _a & x >= 0 -> x + 2 = 2
+val it = () : unit
+-
+```
+Let's observe that formula **3.** isn't an Hoare's triple!It is an aritmetic expression, in order to remoove it as an axiom the meta-variable *_a* must acquire a value. Such a value must be provided by the user using the function meta:
+```
+- meta "_a" "x = 0";
+1. {x = 0}skip{x = 0}
+2. {x = 0 & x < 0}x := x + 1{x = 2}
+3. x = 0 & x >= 0 -> x + 2 = 2
+val it = () : unit
+```
+* Note that in such a case the normalizing process is automatic.
+
+Starting from the latest state, and applying in sequence
+* by(Rule.tacStr 2)
+* by(Rule.tacAssign 3)
+* by(Rule.tacNorm 3)
+the following state is obtained:
+
+```
+- pr();
+1. {x = 0}skip{x = 0}
+2. x = 0 & x < 0 -> x + 1 = 2
+3. {x + 1 = 2}x := x + 1{x = 2}
+4. x = 0 & x >= 0 -> x + 2 = 2
+val it = () : unit
+-
+```
+* Note the use of function pr
+
+Obviously all four formulas are axioms and can be easily remooved by tacAxiom.
+Let's suppose the last one we remoove is formula **1.** we can conclude our proof in such a way:
+```
+- pr();
+1. {x = 0}skip{x = 0}
+val it = () : unit
+- by(Rule.tacAxiom 1);
+No subgoals left! Milner says: <<Good job bro!>>
 val it = () : unit
 -
 ```
