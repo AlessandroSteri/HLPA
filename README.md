@@ -72,22 +72,22 @@ In this section we describe the exposed interface of **Controller** that let's y
 * getState: returns the current state.
 
 As example of usage we will show how to derive the folloving Hoare's triple *F*:
-'''ML
-{x=1}skip; if(x<0)thenx:=x+1elsex:=x+2end{x=2}
-'''
+```ML
+{x=1} skip; if(x<0) then x := x+1 else x := x+2 end {x=2}
+```
 Open the terminal in the project folder and start ML REPL:
-'''
+```
 Standard ML of New Jersey v110.78 [built: Thu Jul 23 11:21:58 2015]
 -
-'''ML
+```
 Open HLPA files:
-'''
+```
 Standard ML of New Jersey v110.78 [built: Thu Jul 23 11:21:58 2015]
 -  use "files.sml";
 ...
-'''
+```
 Open structure Controller to pbtain the interface:
-'''ML
+```
 - open Controller;
 opening Controller
   val pr : unit -> unit
@@ -97,19 +97,19 @@ opening Controller
   val meta : string -> string -> unit
   val undo : unit -> unit
 -
-'''
+```
 Then insert the formula *F* using goal (at each step of the proof HLPA will print the current state of the proof enumering each formula in it, at this moment just the initian one):
-'''
+```
 - goal "{x=0}skip;if(x<0)then x:=x+1 else x:=x+2 end{x=2}";
 1. {x = 0}skip; if (x < 0) then x := x + 1 else x := x + 2 end{x = 2}
 val it = () : unit
 -
-'''
+```
 Let's apply the tactic *tacComp* on the only formula we have, in order to do so we use the function *by*, and since tacComp is a meta rule it add the meta-variable *_a*:
-'''
+```
 - by(Rule.tacComp 1);
 1. {x = 0}skip{_a}
 2. {_a}if (x < 0) then x := x + 1 else x := x + 2 end{x = 2}
 val it = () : unit
 -
-'''
+```
