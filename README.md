@@ -2,27 +2,27 @@
 Hoare Logic Proof Assistant in SML
 
 ## Overview
-HLPA supports the user in prooving partial correctness of a program written in an imperative language called *Imp* defined in te section **Abstract Syntax**.
+HLPA supports the user in proving partial correctness of a program written in an imperative language called *Imp* defined in the section **Abstract Syntax**.
 
-In order to do so, HLPA takes as input a formula *F* of Hoare's logic wich represents the formal specification of the program, and help the user to create the derivation tree from the original formula *F* by aplying the rule of inference, called *tatics*, selected by the user himself.
+In order to do so, HLPA takes as input a formula *F* of Hoare's logic which represents the formal specification of the program, and help the user to create the derivation tree from the original formula *F* by applying the rule of inference, called *tactics*, selected by the user himself.
 
-Any time during execution, HLPA keeps in memory the current state of the proof. Such a state consist of a list of formulas that reppresent the leafs of derivation tree builded up till that moment.
+Any time during execution, HLPA keeps in memory the current state of the proof. Such a state consist of a list of formulas that represent the leafs of derivation tree builded up till that moment.
 
-The initial state *s0* of the proof contains only the formula *F* provided as input. Starting from a state *S* the user generates the following state *S'* specifyng a tactic *T* to apply and a formula f ∈ *S* to be the target of the tattic *T*..
-The state *S'* is obtained by subtituting f in *S* with the premises derived by *T(f)*.
-If a formula in a state is an axiom, can be removed since is truts holds with no assumptions, this entails that *F* is proved when is reached an empty state.
+The initial state *s0* of the proof contains only the formula *F* provided as input. Starting from a state *S* the user generates the following state *S'* specifying a tactic *T* to apply and a formula f ∈ *S* to be the target of the tactic *T*..
+The state *S'* is obtained by substituting f in *S* with the premises derived by *T(f)*.
+If a formula in a state is an axiom, can be removed since his truth holds with no assumptions, this entails that *F* is proved when is reached an empty state.
 
-Some tatics introduce meta-variable (placeholder), where the tactic can't compute the precondition or postcondition inside of a formula.
+Some tactics introduce meta-variable (placeholder), where the tactic can't compute the precondition or postcondition inside of a formula.
 
 Mooving forward in the proof is it possible to insert expressions when such precondition or postcondition appear clear.
 
 ## HLPA Structure
 HLPA consist of 6 modules:
-* Hoare: defines abstract sintax of the *Imp* language and of the Hoare formulas. It also includes utilities functions to handling formulas.
+* Hoare: defines abstract syntax of the *Imp* language and of the Hoare formulas. It also includes utilities functions to handling formulas.
 * Lexer: implements a lexer that tokenize the formula *F* passed in input as string.
-* Parser: translates the output of the lexers in formulas by applyng contructors from abstract systax.
+* Parser: translates the output of the lexers in formulas by applying constructors from abstract syntax.
 * Printer: converts formulas in printable string.
-* Rule: defines the functions that implements tatics.
+* Rule: defines the functions that implements tactics.
 * Controller: expose the methods to drive the proof.
 
 ## Abstract Syntax
@@ -54,7 +54,7 @@ The Abstract Syntax is represented by the following datatypes:
 
 ```
 The constructor *Meta* defines a meta-variable *_a* as a placeholder for a boolean expression inside a formula in the case it can't be computed by tactics in the current state.
-When you apply a tactic to a formula that contains a meta-variable *_a* in such a state that is possible to compute the boolean exp that *_a* is holding the place for, you can define by the constructor *MetaVal* a meta-value that is a parir *(a, exp)* that associates  the computed boolean expression exp to the meta-variable *_a* and is written in HLPA as *a : exp*.
+When you apply a tactic to a formula that contains a meta-variable *_a* in such a state that is possible to compute the boolean exp that *_a* is holding the place for, you can define by the constructor *MetaVal* a meta-value that is a pair *(a, exp)* that associates  the computed boolean expression exp to the meta-variable *_a* and is written in HLPA as *a : exp*.
 
 ## Tactics
 There are two types of tactic:
