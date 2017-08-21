@@ -8,7 +8,7 @@ In order to do so, HLPA takes as input a formula *F* of Hoare's logic wich repre
 
 Any time during execution, HLPA keeps in memory the current state of the proof. Such a state consist of a list of formulas that reppresent the leafs of derivation tree builded up till that moment.
 
-Th einitial state *s0* of the proof contains only the formula *F* provided as input. Starting from a state *S* the user generates the following state *S'* specifyng a tactic *T* to apply and a formula f ∈ *S* to be the target of the tattic *T*..
+The initial state *s0* of the proof contains only the formula *F* provided as input. Starting from a state *S* the user generates the following state *S'* specifyng a tactic *T* to apply and a formula f ∈ *S* to be the target of the tattic *T*..
 The state *S'* is obtained by subtituting f in *S* with the premises derived by *T(f)*.
 If a formula in a state is an axiom, can be removed since is truts holds with no assumptions, this entails that *F* is proved when is reached an empty state.
 
@@ -53,8 +53,8 @@ The Abstract Syntax is represented by the following datatypes:
                      | Triple of boolExp * prog * boolExp
 
 ```
-The cinstructor *Meta* defines a meta-variable *_a* as a placesholder for a boolean expression inside a formula in the case it can't be computed by tactics in the current state.
-When you apply a tactic to a formula that contains a meta-variable *_a* in such a state that is possible to compute the boolean exp that *_a* is holdimg the place for, you can define by the constructor *MetaVal* a meta-value that is a parir *(a, exp)* that associates  the computed boolean expression exp to the meta-variable *_a* and is written in HLPA as *a : exp*.
+The constructor *Meta* defines a meta-variable *_a* as a placeholder for a boolean expression inside a formula in the case it can't be computed by tactics in the current state.
+When you apply a tactic to a formula that contains a meta-variable *_a* in such a state that is possible to compute the boolean exp that *_a* is holding the place for, you can define by the constructor *MetaVal* a meta-value that is a parir *(a, exp)* that associates  the computed boolean expression exp to the meta-variable *_a* and is written in HLPA as *a : exp*.
 
 ## Tactics
 There are two types of tactic:
@@ -79,15 +79,15 @@ This process is called normalization.
 tacMeta takes as arguments a string *_a* and a boolean expression *exp* and substitute with exp all the meta-variable and meta-value named *_a* in the current state allowing the user to provide manually the value associated to a meta-variable.
 
 ## Practical Guide
-In this section we describe the exposed interface of **Controller** that let's you drive the proof, followed by a pratical example of proof.
-* goal: takes as input a Hoare's triple as a string and inizialize the state.
-* by: takes as input a tactic and the index of the target formula and update the state with the new premises. In case of failure give an oppoprtune message. tacMeta cant be passed as argument of by, must be used by calling Meta.
+In this section we describe the exposed interface of **Controller** that let's you drive the proof, followed by a practical example of a proof.
+* goal: takes as input a Hoare's triple as a string and initialize the state.
+* by: takes as input a tactic and the index of the target formula and update the state with the new premises. In case of failure give an opportune message. tacMeta cant be passed as argument of by, must be used by calling Meta.
 * meta: takes as input the name of a meta-variable and a boolean expression and invokes tacMeta
 * pr: prints current state.
 * undo: undoes the latest change to the state restoring the previous state.
 * getState: returns the current state.
 
-As example of usage we will show how to derive the folloving Hoare's triple *F*:
+As example of usage we will show how to derive the following Hoare's triple *F*:
 ```
 {x=1} skip; if(x<0) then x := x+1 else x := x+2 end {x=2}
 ```
@@ -102,7 +102,7 @@ Standard ML of New Jersey v110.78 [built: Thu Jul 23 11:21:58 2015]
 -  use "files.sml";
 ...
 ```
-Open structure Controller to pbtain the interface:
+Open structure Controller to obtain the interface:
 ```
 - open Controller;
 opening Controller
@@ -114,7 +114,7 @@ opening Controller
   val undo : unit -> unit
 -
 ```
-Then insert the formula *F* using goal (at each step of the proof HLPA will print the current state of the proof enumering each formula in it, at this moment just the initian one):
+Then insert the formula *F* using goal (at each step of the proof HLPA will print the current state of the proof enumering each formula in it, at this moment just the initial one):
 ```
 - goal "{x=0}skip;if(x<0)then x:=x+1 else x:=x+2 end{x=2}";
 1. {x = 0}skip; if (x < 0) then x := x + 1 else x := x + 2 end{x = 2}
@@ -129,7 +129,7 @@ Let's apply the tactic *tacComp* on the only formula we have, in order to do so 
 val it = () : unit
 -
 ```
-Since now in the current state there are two premises you can choose wich to target by a tactic, let's choose to apply tacIf on formula **2.** :
+Since now in the current state there are two premises you can choose which to target by a tactic, let's choose to apply tacIf on formula **2.** :
 ```
 - by(Rule.tacIf 2);
 1. {x = 0}skip{_a}
@@ -156,7 +156,7 @@ val it = () : unit
 ```
 * (Note that meta-variabile *_b* become meta-value *b : x + 2 = 2* when it's computed by the tactic tacAssign)
 
-Let's then normilize the meta-variable *_b* using tacNorm; this means that all the occurrency of *_b* will become the expression x + 2 = 2:
+Let's then normalize the meta-variable *_b* using tacNorm; this means that all the occurrency of *_b* will become the expression x + 2 = 2:
 
 ```
 - by(Rule.tacNorm 4);
@@ -167,7 +167,7 @@ Let's then normilize the meta-variable *_b* using tacNorm; this means that all t
 val it = () : unit
 -
 ```
-Since formula **4.** is an axiom can be remooved with tacAxiom:
+Since formula **4.** is an axiom can be removed with tacAxiom:
 
 ```
 - by(Rule.tacAxiom 4);
@@ -177,7 +177,7 @@ Since formula **4.** is an axiom can be remooved with tacAxiom:
 val it = () : unit
 -
 ```
-Let's observe that formula **3.** isn't an Hoare's triple!It is an aritmetic expression, in order to remoove it as an axiom the meta-variable *_a* must acquire a value. Such a value must be provided by the user using the function meta:
+Let's observe that formula **3.** isn't an Hoare's triple!It is an arithmetic expression, in order to remove it as an axiom the meta-variable *_a* must acquire a value. Such a value must be provided by the user using the function meta:
 ```
 - meta "_a" "x = 0";
 1. {x = 0}skip{x = 0}
@@ -204,8 +204,8 @@ val it = () : unit
 ```
 * Note the use of function pr
 
-Obviously all four formulas are axioms and can be easily remooved by tacAxiom.
-Let's suppose the last one we remoove is formula **1.** we can conclude our proof in such a way:
+Obviously all four formulas are axioms and can be easily removed by tacAxiom.
+Let's suppose the last one we remove is formula **1.** we can conclude our proof in such a way:
 ```
 - pr();
 1. {x = 0}skip{x = 0}
